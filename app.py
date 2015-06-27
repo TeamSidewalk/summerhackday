@@ -30,5 +30,9 @@ def get_nonprofit_data():
     r = requests.get(url)
     return r.text
 
+@app.route('/signup')
+def sign_up():
+		return render_template('signup.html');
+
 if __name__ == '__main__':
     app.run()

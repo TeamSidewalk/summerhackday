@@ -55,6 +55,10 @@ def is_json(myjson):
         return False
     return True
 
+@app.route('/index')
+def index():
+		return render_template('index.html')
+
 @app.route('/signup')
 def sign_up():
     return render_template('signup.html')

@@ -16,7 +16,6 @@ app.secret_key = 'test'
 @app.route('/')
 def index():
 	return render_template('index.html')
-
 @app.route('/nonprofit_signup')
 def signup():
 #    name = request.args.get('name')
@@ -58,8 +57,25 @@ def is_json(myjson):
         return False
     return True
 
+@app.route('/org_confirm')
+def load_profile():
+    # index categories with API index - 1 (since list will start at 0)
+    categories = ["Arts, Culture & Humanities",
+                  "Education",
+                  "Environment and Animals",
+                  "Health",
+                  "Human Services",
+                  "International, Foreign Affairs",
+                  "Public, Societal Benefit",
+                  "Religion Related",
+                  "Mutual/Membership Benefit",
+                  "Miscellaneous"]
+
+    return render_template('nonprofit_confirm.html')
+
 
 @app.route('/signup', methods=['GET', 'POST'])
+
 def sign_up():
 		if request.method == 'GET':
 			print "does it get here?"

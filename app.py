@@ -14,8 +14,8 @@ app.debug = True
 app.secret_key = 'test'
 
 @app.route('/')
-def hello_world():
-	return 'Hello Leah!'
+def index():
+	return render_template('index.html')
 
 @app.route('/nonprofit_signup')
 def signup():
@@ -58,9 +58,6 @@ def is_json(myjson):
         return False
     return True
 
-@app.route('/index')
-def index():
-		return render_template('index.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():

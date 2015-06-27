@@ -30,9 +30,13 @@ def get_nonprofit_data():
     r = requests.get(url)
     return r.text
 
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def sign_up():
-		return render_template('signup.html');
+		if request.method == 'GET':
+			return render_template('signup.html')
+		else:
+			name = request.args.get('p_name')
+			return name
 
 if __name__ == '__main__':
     app.run()

@@ -14,22 +14,21 @@ app.debug = True
 def hello_world():
     return 'Hello Leah!'
 
-@app.route('/thing', methods=['GET'])
-def get_thing():
-    if request.method == 'GET':
-        return 'I have a thing'
-
-@app.route('/search')
-def search():
-    return render_template('search.html')
+@app.route('/nonprofit_signup')
+def signup():
+#    name = request.args.get('name')
+#    name = request.form['name']
+    name = "Khan Academy" 
+    return render_template('nonprofit_signup.html',
+                           name=name)
 
 @app.route('/get_nonprofit_data', methods=['GET', 'POST'])
 def get_nonprofit_data():
     # default status
     r = None
     _dict = {}
-    name = request.args.get('nonprofit_name')
-    ein = request.args.get('nonprofit_ein')
+    name = request.form['nonprofit_name']
+    ein = request.form['nonprofit_ein']
     url_name = 'https://projects.propublica.org/nonprofits/api/v1/search.json'
     url_ein = 'https://projects.propublica.org/nonprofits/api/v1/organizations/' + ein + '.json'
 

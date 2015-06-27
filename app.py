@@ -95,8 +95,12 @@ def index():
     return render_template('index.html')
 
 @app.route('/description')
-def home():
+def about():
     return render_template('description.html')
+
+@app.route('/team')
+def team():
+    return render_template('team.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():

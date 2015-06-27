@@ -94,6 +94,10 @@ def load_profile():
 def index():
     return render_template('index.html')
 
+@app.route('/description')
+def home():
+    return render_template('description.html')
+
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():
     if request.method == 'GET':

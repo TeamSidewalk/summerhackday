@@ -12,6 +12,7 @@
 .less-wide-centered {
 	width: 60%;
 	margin: 0 auto;
+}
 
 
 #load-image {
@@ -23,6 +24,7 @@
 	animation-fill-mode:both
 }
 
-ul {
-	list-style-type: none !important;
+.ui-autocomplete {
+	list-style: none;
+	background: #eee;
 }

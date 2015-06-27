@@ -100,8 +100,8 @@ def volunteer_signup():
 		skills = request.form['skill'].split(',')
 		for i in range(len(skills)):
 			skills[i] = skills[i].strip()
-		session['skills'] = skills
-		print skills
+			session['skills'].append(skills[i])
+		skills = session['skills']
 	return render_template('volunteer_profile.html', name=name, email=email, skills=skills)
 
 @app.route('/signup', methods=['GET', 'POST'])

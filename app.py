@@ -40,15 +40,27 @@ def get_nonprofit_data():
         r = requests.get(url_ein).text
     elif name:
         r = requests.get(url_name, {'q': name}).text
-    if r:
-        _dict = json.loads(r)
-    else:
-        r = json.dumps('No information to search with :C')
 
-    if 'total_results' in _dict and (name or ein):
-        if _dict['total_results'] <= 0:
-            r = "No results for your query. :C"                                             
+    if is_json(r):
+        _dict = json.loads(r)
+        if 'total_results' in _dict and (name or ein):
+            if _dict['total_results'] == 0:
+                r = "No results for your query. :C"
+    else:
+        r = "No nonprofit with EIN exists"
+
     return r
+
+def is_json(myjson):
+    try:
+        json_object = json.loads(myjson)
+    except ValueError, e:
+        return False
+    return True
+
+@app.route('/index')
+def index():
+		return render_template('index.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():

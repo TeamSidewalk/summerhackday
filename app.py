@@ -4,6 +4,7 @@ from flask import Response
 from flask import render_template
 from flask import redirect
 from flask import session
+from flask import url_for
 import json
 import pprint
 import requests
@@ -13,9 +14,15 @@ app = Flask(__name__)
 app.debug = True
 app.secret_key = 'test'
 
-@app.route('/')
-def index():
-	return render_template('index.html')
+@app.route('/thing', methods=['GET'])
+def get_thing():
+    if request.method == 'GET':
+        return 'I have a thing'
+
+@app.route('/search')
+def search():
+    return render_template('search.html')
+
 @app.route('/nonprofit_signup')
 def signup():
 #    name = request.args.get('name')
@@ -24,7 +31,7 @@ def signup():
     return render_template('nonprofit_signup.html',
                            name=name)
 
-@app.route('/get_nonprofit_data', methods=['GET', 'POST'])
+@app.route('/get_nonprofit_data', methods=['POST'])
 def get_nonprofit_data():
     # default status
     r = None
@@ -42,13 +49,20 @@ def get_nonprofit_data():
 
     if is_json(r):
         _dict = json.loads(r)
+        session['_dict_exists'] = True
         if 'total_results' in _dict and (name or ein):
             if _dict['total_results'] == 0:
-                r = "No results for your query. :C"
+                session['_dict_exists'] = False
+                session['_dict_errors'] = "No results for your query. :C"
     else:
-        r = "No nonprofit with EIN exists"
+        session['_dict_errors'] = "No nonprofit with EIN exists"
+        session['_dict_exists'] = False
 
-    return r
+    session['_dict'] = _dict
+
+    print _dict
+
+    return redirect(url_for("load_profile"))
 
 def is_json(myjson):
     try:
@@ -71,24 +85,29 @@ def load_profile():
                   "Mutual/Membership Benefit",
                   "Miscellaneous"]
 
-    return render_template('nonprofit_confirm.html')
+    if session['_dict_exists']:
+        return render_template('nonprofit_confirm.html', _dict=session['_dict'])
+    else:
+        return session['_dict_errors']
 
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
-
 def sign_up():
-		if request.method == 'GET':
-			print "does it get here?"
-			return render_template('signup.html')
-		else:
-			print "how about here?"
-			name = request.form['p_name']
-			type = request.form['type']
-			session['name'] = name
-			if type == 'Non Profit':
-				return redirect('/nonprofit_signup')#, name=name)
-			else:
-				return redirect('/')
+    if request.method == 'GET':
+        print "does it get here?"
+        return render_template('signup.html')
+    else:
+        print "how about here?"
+        name = request.form['p_name']
+        type = request.form['type']
+        session['name'] = name
+        if type == 'Non Profit':
+            return redirect('/nonprofit_signup')#, name=name)
+        else:
+            return redirect('/')
 
 if __name__ == '__main__':
     app.run()

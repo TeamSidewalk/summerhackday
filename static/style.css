@@ -22,3 +22,7 @@
 	-webkit-animation-fill-mode:both;
 	animation-fill-mode:both
 }
+
+ul {
+	list-style-type: none !important;
+}

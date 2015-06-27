@@ -4,12 +4,14 @@ from flask import Response
 from flask import render_template
 from flask import redirect
 from flask import session
+from flask import send_from_directory
 import json
 import pprint
 import requests
+from Levenshtein import distance
 # from urllib.request import urlopen
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 app.debug = True
 app.secret_key = 'test'
 
@@ -74,20 +76,35 @@ def load_profile():
 
     return render_template('nonprofit_confirm.html')
 
-@app.route('/signup')
-
 @app.route('/index')
 def index():
 		return render_template('index.html')
 
-@app.route('/volunteer_profile')
+
+def textformat(initialVal, value):
+	print "hi"
+	print initialVal
+	print value
+	print "hello"
+	if distance(initialVal, value) < 5:
+		return value
+	else: 
+		return None
+
+@app.route('/volunteer_profile', methods=['GET', 'POST'])
 def volunteer_signup():
 	name = session['name']
 	email = session['email']
-	return render_template('volunteer_profile.html', name=name, email=email)
+	skills = session['skills']
+	if request.method == 'POST':
+		skills = request.form['skill'].split(',')
+		for i in range(len(skills)):
+			skills[i] = skills[i].strip()
+		session['skills'] = skills
+		print skills
+	return render_template('volunteer_profile.html', name=name, email=email, skills=skills)
 
 @app.route('/signup', methods=['GET', 'POST'])
-
 def sign_up():
 		if request.method == 'GET':
 			print "does it get here?"

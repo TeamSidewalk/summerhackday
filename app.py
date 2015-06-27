@@ -2,6 +2,8 @@ from flask import Flask
 from flask import request
 from flask import Response
 from flask import render_template
+from flask import redirect
+from flask import session
 import json
 import pprint
 import requests
@@ -9,16 +11,17 @@ import requests
 
 app = Flask(__name__)
 app.debug = True
+app.secret_key = 'test'
 
 @app.route('/')
 def hello_world():
-    return 'Hello Leah!'
+	return 'Hello Leah!'
 
 @app.route('/nonprofit_signup')
 def signup():
 #    name = request.args.get('name')
 #    name = request.form['name']
-    name = "Khan Academy" 
+    name = session['name']
     return render_template('nonprofit_signup.html',
                            name=name)
 
@@ -55,8 +58,12 @@ def sign_up():
 		else:
 			print "how about here?"
 			name = request.form['p_name']
-			print name
-			return name
+			type = request.form['type']
+			session['name'] = name
+			if type == 'Non Profit':
+				return redirect('/nonprofit_signup')#, name=name)
+			else:
+				return redirect('/')
 
 if __name__ == '__main__':
     app.run()

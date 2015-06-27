@@ -117,5 +117,13 @@ def sign_up():
         else:
             return redirect('/')
 
+@app.route('/user_dashboard')
+def add_hours():
+		return render_template('user_dashboard.html')
+
+
+
+
+
 if __name__ == '__main__':
     app.run()

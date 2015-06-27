@@ -1,3 +1,11 @@
 .much-padding {
 	padding: 70px;
 }
+#load-image {
+	-webkit-animation-duration:3.3s;
+	animation-duration:3.3s;
+	-webkit-animation-delay:0.2s;
+	animation-delay:0.2s;
+	-webkit-animation-fill-mode:both;
+	animation-fill-mode:both
+}

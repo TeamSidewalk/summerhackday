@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="text-center">
+	<h2>Welcome {{ name }}!</h2>
+	<p>Please enter your EIN so we can fetch information about your non-profit.</p>
+	<form action = "/get_nonprofit_data" method="post" class="form-wrapper cf much-padding">
+	    <input name="nonprofit_ein" type="text" placeholder="EIN" required>
+	    <input type="hidden" name="nonprofit_name" value={{ name }}>
+	    <input type="hidden" name="nonprofit_email" value={{ email }}>
+	    <button type="submit">Continue</button>
+	</form>
+</div>
+{% endblock %}

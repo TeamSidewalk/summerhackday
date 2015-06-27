@@ -1,0 +1,30 @@
+.much-padding {
+	padding: 70px;
+}
+
+.white-text{
+	color: #ffffff;
+}
+.grey-text{
+	color: #c0c0d8;
+}
+.panel {
+	display: block;
+	width:50%;
+	margin: 0 auto;
+	margin-bottom: 20px;
+}
+
+.less-wide-centered {
+	width: 60%;
+	margin: 0 auto;
+
+
+#load-image {
+	-webkit-animation-duration:3.3s;
+	animation-duration:3.3s;
+	-webkit-animation-delay:0.2s;
+	animation-delay:0.2s;
+	-webkit-animation-fill-mode:both;
+	animation-fill-mode:both
+}

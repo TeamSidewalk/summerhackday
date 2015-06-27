@@ -14,9 +14,8 @@ app.debug = True
 app.secret_key = 'test'
 
 @app.route('/')
-def hello_world():
-	return 'Hello Leah!'
-
+def index():
+	return render_template('index.html')
 @app.route('/nonprofit_signup')
 def signup():
 #    name = request.args.get('name')
@@ -74,11 +73,6 @@ def load_profile():
 
     return render_template('nonprofit_confirm.html')
 
-@app.route('/signup')
-
-@app.route('/index')
-def index():
-		return render_template('index.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 

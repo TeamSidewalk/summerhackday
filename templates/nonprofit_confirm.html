@@ -13,6 +13,10 @@
             <input name="ein" class="form-control" type="text" value={{ _dict.organization.ein }}>
         </div>
         <div class="form-group">
+            <label>NTEE Group: {{ _dict.organization.ntee_code }}</label>
+            <input name="ein" class="form-control" type="text" value={{ _dict.organization.ntee_code }}>
+        </div>
+        <div class="form-group">
             <label>Sectors:</label>
             {% for sector in sectors %}
             <label>

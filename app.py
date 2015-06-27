@@ -55,6 +55,22 @@ def is_json(myjson):
         return False
     return True
 
+@app.route('/org_confirm')
+def load_profile():
+    # index categories with API index - 1 (since list will start at 0)
+    categories = ["Arts, Culture & Humanities",
+                  "Education",
+                  "Environment and Animals",
+                  "Health",
+                  "Human Services",
+                  "International, Foreign Affairs",
+                  "Public, Societal Benefit",
+                  "Religion Related",
+                  "Mutual/Membership Benefit",
+                  "Miscellaneous"]
+
+    return render_template('nonprofit_confirm.html')
+
 @app.route('/signup')
 def sign_up():
     return render_template('signup.html')

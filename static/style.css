@@ -1,3 +1,16 @@
 .much-padding {
 	padding: 70px;
 }
+
+.panel {
+	display: block;
+	width:50%;
+	margin: 0 auto;
+	margin-bottom: 20px;
+}
+
+.less-wide-centered {
+	width: 60%;
+	margin: 0 auto;
+
+}

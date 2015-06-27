@@ -45,12 +45,12 @@ def get_nonprofit_data():
 
     if 'total_results' in _dict and (name or ein):
         if _dict['total_results'] <= 0:
-            r = "No results for your query. :C"                                                
+            r = "No results for your query. :C"                                             
     return r
 
 @app.route('/signup')
 def sign_up():
-		return render_template('signup.html');
+    return render_template('signup.html')
 
 if __name__ == '__main__':
     app.run()

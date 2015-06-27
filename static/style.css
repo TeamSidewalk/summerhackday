@@ -2,6 +2,12 @@
 	padding: 70px;
 }
 
+.white-text{
+	color: #ffffff;
+}
+.grey-text{
+	color: #c0c0d8;
+}
 .panel {
 	display: block;
 	width:50%;

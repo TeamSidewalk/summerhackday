@@ -62,6 +62,12 @@ def is_json(myjson):
 def index():
 		return render_template('index.html')
 
+@app.route('/volunteer_profile')
+def volunteer_signup():
+	name = session['name']
+	email = session['email']
+	return render_template('volunteer_profile.html', name=name, email=email)
+
 @app.route('/signup', methods=['GET', 'POST'])
 def sign_up():
 		if request.method == 'GET':
@@ -70,12 +76,14 @@ def sign_up():
 		else:
 			print "how about here?"
 			name = request.form['p_name']
+			email = request.form['email']
 			type = request.form['type']
 			session['name'] = name
+			session['email'] = email
 			if type == 'Non Profit':
-				return redirect('/nonprofit_signup')#, name=name)
+				return redirect('/nonprofit_signup')
 			else:
-				return redirect('/')
+				return redirect('/volunteer_profile')
 
 if __name__ == '__main__':
     app.run()

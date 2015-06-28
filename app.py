@@ -4,13 +4,15 @@ from flask import Response
 from flask import render_template
 from flask import redirect
 from flask import session
+from flask import send_from_directory
 from flask import url_for
 import json
 import pprint
 import requests
+from Levenshtein import distance
 # from urllib.request import urlopen
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='')
 app.debug = True
 app.secret_key = 'test'
 
@@ -57,11 +59,8 @@ def get_nonprofit_data():
     else:
         session['_dict_errors'] = "No nonprofit with EIN exists"
         session['_dict_exists'] = False
-
     session['_dict'] = _dict
-
     print _dict
-
     return redirect(url_for("load_profile"))
 
 def is_json(myjson):
@@ -84,15 +83,44 @@ def load_profile():
                   "Religion Related",
                   "Mutual/Membership Benefit",
                   "Miscellaneous"]
-
     if session['_dict_exists']:
         return render_template('nonprofit_confirm.html', _dict=session['_dict'])
     else:
         return session['_dict_errors']
 
 @app.route('/')
-def index():
+def home():
     return render_template('index.html')
+
+@app.route('/volunteer_profile', methods=['GET', 'POST'])
+def volunteer_signup():
+	name = session['name']
+	email = session['email']
+	skills = session['skills']
+	if request.method == 'POST':
+		skills = request.form['skill'].split(',')
+		for i in range(len(skills)):
+			skills[i] = skills[i].strip()
+			session['skills'].append(skills[i])
+		skills = session['skills']
+	return render_template('volunteer_profile.html', name=name, email=email, skills=skills)
+
+@app.route('/signup', methods=['GET', 'POST'])
+def sign_up():
+		if request.method == 'GET':
+			print "does it get here?"
+			return render_template('signup.html')
+		else:
+			print "how about here?"
+			name = request.form['p_name']
+			email = request.form['email']
+			type = request.form['type']
+			session['name'] = name
+			session['email'] = email
+			if type == 'Non Profit':
+				return redirect('/nonprofit_signup')
+			else:
+				return redirect('/volunteer_profile')
 
 @app.route('/description')
 def about():
@@ -102,28 +130,9 @@ def about():
 def team():
     return render_template('team.html')
 
-@app.route('/signup', methods=['GET', 'POST'])
-def sign_up():
-    if request.method == 'GET':
-        print "does it get here?"
-        return render_template('signup.html')
-    else:
-        print "how about here?"
-        name = request.form['p_name']
-        type = request.form['type']
-        session['name'] = name
-        if type == 'Non Profit':
-            return redirect('/nonprofit_signup')#, name=name)
-        else:
-            return redirect('/')
-
 @app.route('/user_dashboard')
 def add_hours():
 		return render_template('user_dashboard.html')
-
-
-
-
 
 if __name__ == '__main__':
     app.run()

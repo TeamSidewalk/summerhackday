@@ -89,6 +89,7 @@ def load_profile():
         return session['_dict_errors']
 
 @app.route('/')
+def home():
     return render_template('index.html')
 
 @app.route('/volunteer_profile', methods=['GET', 'POST'])
@@ -128,21 +129,6 @@ def about():
 @app.route('/team')
 def team():
     return render_template('team.html')
-
-@app.route('/signup', methods=['GET', 'POST'])
-def sign_up():
-    if request.method == 'GET':
-        print "does it get here?"
-        return render_template('signup.html')
-    else:
-        print "how about here?"
-        name = request.form['p_name']
-        type = request.form['type']
-        session['name'] = name
-        if type == 'Non Profit':
-            return redirect('/nonprofit_signup')#, name=name)
-        else:
-            return redirect('/')
 
 @app.route('/user_dashboard')
 def add_hours():

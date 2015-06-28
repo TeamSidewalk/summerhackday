@@ -1,31 +1,41 @@
-{% extends "layout.html" %}
+{% extends "layout_load_page.html" %}
 {% block body %}
 <!DOCTYPE html>
 <html lang="en">
+<div id="load-image" class="cover-image animated slow fadeIn" style="background-image : url('../static/stock_coding_edit.jpg')"></div>
+      <!-- content -->
+      <div class="container">
+            <div class="row">
+            <!-- content -->
+              <div class="col-md-12 text-center">
+                
 <body onLoad = "load()">
-    <h1>Hours Volunteered to Date: </h1><h1 id="total">0</h1>
-    <h2>Enter Volunteer Hours</h2>
+    <h1 class="text-inverse">Hours Volunteered to Date: </h1><h1 id="total">0</h1>
+    <h2 class="text-inverse">Enter Volunteer Hours</h2>
         <input type="text" id="hours">
-        <input type="button" value="Send" onclick = "sum()">
+        <input type="button" value="Submit!" onclick = "sum()">
 
-    <h2>Current Goal:</h2><h2 id="goal"></h2>
+    <h2 class="text-inverse">Current Goal:</h2><h2 id="goal"></h2>
     	<progress id="myProgress" value="0" max="100">
 </progress>
 
-	<h2>Add more hours:</h2>
+	<h2 class="text-inverse">Add more hours:</h2>
         <input type="text" id="add_hours">
-        <input type="button" value="Send" onclick = "add_hours()">
+        <input type="button" value="Submit!" onclick = "add_hours()">
 
-	<h2>Set new goal:</h2>
+	<h2 class="text-inverse">Set new goal:</h2>
         <input type="text" id="new_goal">
-        <input type="button" value="Send" onclick = "new_goal()">
+        <input type="button" value="Submit!" onclick = "new_goal()">
 
 
-   
+   </div>
+</div>
 </body>
 </html>
 
 <script>
+	localStorage.setItem("total", 0); 
+
 
 function load() {
 	document.getElementById("total").innerHTML = localStorage.getItem("total");

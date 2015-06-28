@@ -1,28 +1,33 @@
 {% extends "layout.html" %}
 {% block body %}
-	<h3 class="text-center">Here is what we found about {{ name }}. Look good?</h1>
+    <!-- {{ _dict }} -->
+    <h3 class="text-center">Here is what we found about {{ _dict.organization.name }}. Look good?</h1>
 
-	<form action = "/org_profile" method="post" class="form-wrapper cf much-padding less-wide-centered">
-		<div class="form-group">
-			<label>Name:</label>	    
-	    	<input name="nonprofit_name" class="form-control" type="text"  value={{ name }}>
-	    </div>
-		<div class="form-group">
-	    	<label>EIN:</label>
-	    	<input name="ein" class="form-control" type="text" value={{ EIN }}>
-	    </div>
-		<div class="form-group">
-	    	<label>Sectors:</label>
-	    	{% for sector in sectors %}
-	    	<label>
-      			<input type="checkbox" {% if sector.isChecked %} checked {% endif %} class="form-control"> {{ sector.name }}
-    		</label> 
-    		{% endfor %}
-    	</div>
-    	<div class="form-group">
-    		<label>Mission statement:</label>
-    		<input name="mission" class="form-control" type="text">
-    	</div>
-	    <button type="submit">Looks good!</button>
-	</form>
+    <form action = "/org_profile" method="post" class="form-wrapper cf much-padding less-wide-centered">
+        <div class="form-group">
+            <label>Name: {{ _dict.organization.name }}</label>     
+            <input name="nonprofit_name" class="form-control" type="text"  value={{ _dict.organization.name | string }}>
+        </div>
+        <div class="form-group">
+            <label>EIN: {{ _dict.organization.ein }}</label>
+            <input name="ein" class="form-control" type="text" value={{ _dict.organization.ein }}>
+        </div>
+        <div class="form-group">
+            <label>NTEE Group: {{ _dict.organization.ntee_code }}</label>
+            <input name="ein" class="form-control" type="text" value={{ _dict.organization.ntee_code }}>
+        </div>
+        <div class="form-group">
+            <label>Sectors:</label>
+            {% for sector in sectors %}
+            <label>
+                <input type="checkbox" {% if sector.isChecked %} checked {% endif %} class="form-control"> {{ sector.name }}
+            </label> 
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            <label>Mission statement:</label>
+            <input name="mission" class="form-control" type="text">
+        </div>
+        <button type="submit">Looks good!</button>
+    </form>
 {% endblock %}

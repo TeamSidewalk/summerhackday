@@ -96,13 +96,12 @@ def home():
 def volunteer_signup():
 	name = session['name']
 	email = session['email']
-	skills = session['skills']
+	skills = []
 	if request.method == 'POST':
 		skills = request.form['skill'].split(',')
 		for i in range(len(skills)):
 			skills[i] = skills[i].strip()
-			session['skills'].append(skills[i])
-		skills = session['skills']
+        session['skills'] = skills
 	return render_template('volunteer_profile.html', name=name, email=email, skills=skills)
 
 @app.route('/signup', methods=['GET', 'POST'])
